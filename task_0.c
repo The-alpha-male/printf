@@ -9,71 +9,52 @@
  */
 int _printf(const char *format, ...)
 {
-va_list args;
-int count = 0; /* number of characters */
+	va_list args;
+	int count = 0; /* number of characters printed */
+	char *str_arg;
+	char character_arg;
 
-va_start(args, format);
+	va_start(args, format);
 
-for (; *format != '\0'; format++)
-{
-if (*format == '%')
-{
-format++;
-switch (*format)
-{
-case 'c':
-count += print_char(va_arg(args, int));
-break;
-case 's':
-count += print_string(va_arg(args, char *));
-break;
-case '%':
-putchar('%');
-count++;
-break;
-default: /* unsupported identifiers */
-putchar('%');
-putchar(*format);
-count += 2;
-break;
-}
-}
+	while (*format)
+	{
+	if (*format == '%')
+	{
+		format++;
+		switch (*format)
+		{
+			case 'c':
+	character_arg = va_arg(args, int);
+	putchar(character_arg);
+	count++;
+	break;
+	case 's':
+	str_arg = va_arg(args, char *);
+	while (*str_arg)
+	{
+		putchar(*str_arg);
+		str_arg++;
+		count++;
+	}
+	break;
+	case '%':
+	putchar('%');
+	count++;
+	break;
+	default: /* unsupported identifiers */
+	putchar('%');
+	putchar(*format);
+	count += 2;
+	break;
+		}
+	}
 else
 {
-putchar(*format);
-count++;
+	putchar(*format);
+	count++;
 }
+format++;
 }
-
 va_end(args);
-return (count);
-}
-
-/**
- * print_char - prints a character
- * @c: character to print
- * Return: number of characters printed
- */
-int print_char(int c)
-{
-putchar(c);
-return (1);
-}
-
-/**
- * print_string - prints a string
- * @s: string to print
- * Return: number of characters printed
- */
-int print_string(char *s)
-{
-int count = 0;
-
-for (; *s != '\0'; s++)
-{
-putchar(*s);
-count++;
-}
-
-return (count);
+	return (count);
 }
