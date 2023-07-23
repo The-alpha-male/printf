@@ -7,10 +7,11 @@
  * @format: character string
  * Return: Number of characters printed
  */
+
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0; /* number of characters printed */
+	int count = 0;
 	char *str_arg;
 	char character_arg;
 
@@ -41,7 +42,7 @@ int _printf(const char *format, ...)
 	putchar('%');
 	count++;
 	break;
-	default: /* unsupported identifiers */
+	default:
 	putchar('%');
 	putchar(*format);
 	count += 2;
