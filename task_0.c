@@ -1,78 +1,78 @@
-#include <stdarg.h>
-#include <stdlib.h>
+#include "main.h"
 #include <stdio.h>
+#include <stdarg.h>
+#include <unistd.h>
 
 /**
- * print_char - Print a single character.
- * @c: The character to print.
- * @count: A pointer to the count of characters printed.
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ * Return: On success 1.
+ *         On error, -1 is returned, and errno is set appropriately.
  */
-void print_char(char c, int *count)
+int _putchar(char c)
 {
-	putchar(c);
-	(*count)++;
+	return (write(1, &c, 1));
 }
 
 /**
- * print_string - Print a string of characters.
- * @str: The string to print.
- * @count: A pointer to the count of characters printed.
+ * _puts - prints a string, followed by a new line
+ * @str: pointer to the string to print
+ * Return: number of characters printed
  */
-void print_string(const char *str, int *count)
+int _puts(char *str)
 {
-	while (*str)
+	int i = 0;
+
+	while (str[i])
 	{
-		putchar(*str);
-		str++;
-		(*count)++;
+		_putchar(str[i]);
+		i++;
 	}
+	return (i);
 }
 
 /**
- * _printf - printf function
- * @format: character string
- * Return: Number of characters printed
+ * _printf - prints anything
+ * @format: list of argument types passed to the function
+ * Return: number of characters printed
  */
 int _printf(const char *format, ...)
 {
+	int i = 0, count = 0;
 	va_list args;
-	int count = 0;
-	char *str_arg;
-	char character_arg;
+	char *str;
 
 	va_start(args, format);
-
-	while (*format)
+	while (format && format[i])
 	{
-		if (*format == '%')
+		if (format[i] == '%')
 		{
-			format++;
-			switch (*format)
+			i++;
+			switch (format[i])
 			{
-				case 'c':
-					character_arg = va_arg(args, int);
-					print_char(character_arg, &count);
-					break;
-				case 's':
-					str_arg = va_arg(args, char *);
-					print_string(str_arg, &count);
-					break;
-				case '%':
-					print_char('%', &count);
-					break;
-				default:
-					print_char('%', &count);
-					print_char(*format, &count);
-					break;
+			case 'c':
+				count += _putchar(va_arg(args, int));
+				break;
+			case 's':
+				str = va_arg(args, char *);
+				if (!str)
+					str = "(null)";
+				count += _puts(str);
+				break;
+			case '%':
+				count += _putchar('%');
+				break;
+			case '\0':
+				return (-1);
+			default:
+				count += _putchar('%');
+				count += _putchar(format[i]);
 			}
 		}
 		else
-		{
-			print_char(*format, &count);
-		}
-		format++;
+			count += _putchar(format[i]);
+		i++;
 	}
 	va_end(args);
-
 	return (count);
 }
