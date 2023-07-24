@@ -1,67 +1,78 @@
 #include "main.h"
-
-void print_buffer(char buffer[], int *buff_ind);
+#include <stdio.h>
+#include <stdarg.h>
+#include <unistd.h>
 
 /**
-* _printf - Printf function (main)
-* @format: format.
-* Return: chars.
-*/
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ * Return: On success 1.
+ *         On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
 
+/**
+ * _puts - prints a string, followed by a new line
+ * @str: pointer to the string to print
+ * Return: number of characters printed
+ */
+int _puts(char *str)
+{
+	int i = 0;
+
+	while (str[i])
+	{
+		_putchar(str[i]);
+		i++;
+	}
+	return (i);
+}
+
+/**
+ * _printf - prints anything
+ * @format: list of argument types passed to the function
+ * Return: number of characters printed
+ */
 int _printf(const char *format, ...)
 {
-int i, printed = 0, printed_chars = 0;
-int flags, width, precision, size, buff_ind = 0;
-va_list list;
-char buffer[BUFF_SIZE];
+	int i = 0, count = 0;
+	va_list args;
+	char *str;
 
-if (format == NULL)
-return (-1);
-
-va_start(list, format);
-
-for (i = 0; format && format[i] != '\0'; i++)
-{
-if (format[i] != '%')
-{
-buffer[buff_ind++] = format[i];
-if (buff_ind == BUFF_SIZE)
-print_buffer(buffer, &buff_ind);
-printed_chars++;
-}
-else
-{
-print_buffer(buffer, &buff_ind);
-flags = get_flags(format, &i);
-width = get_width(format, &i, list);
-precision = get_precision(format, &i, list);
-size = get_size(format, &i);
-++i;
-printed = handle_print(format, &i, list, buffer,
-flags, width, precision, size);
-if (printed == -1)
-return (-1);
-printed_chars += printed;
-}
-}
-
-print_buffer(buffer, &buff_ind);
-
-va_end(list);
-
-return (printed_chars);
-}
-
-/**
-* print_buffer - Print contents of buffer if it exist
-* @buffer: Array of the chars
-* @buff_ind: Index at which to add next char, represents length.
-*/
-
-void print_buffer(char buffer[], int *buff_ind)
-{
-if (*buff_ind > 0)
-write(1, &buffer[0], *buff_ind);
-
-*buff_ind = 0;
+	va_start(args, format);
+	while (format && format[i])
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			switch (format[i])
+			{
+			case 'c':
+				count += _putchar(va_arg(args, int));
+				break;
+			case 's':
+				str = va_arg(args, char *);
+				if (!str)
+					str = "(null)";
+				count += _puts(str);
+				break;
+			case '%':
+				count += _putchar('%');
+				break;
+			case '\0':
+				return (-1);
+			default:
+				count += _putchar('%');
+				count += _putchar(format[i]);
+			}
+		}
+		else
+			count += _putchar(format[i]);
+		i++;
+	}
+	va_end(args);
+	return (count);
 }
