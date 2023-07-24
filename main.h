@@ -9,7 +9,6 @@
  * @type: type of argument
  * @f: function to print
  */
-
 typedef struct print
 {
 	char *type;
