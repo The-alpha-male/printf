@@ -1,17 +1,9 @@
-This is a collaborative ALX printf  project done in C
+This is a collaborative ALX printf  project done by Ronny Munene and Joyliz
 
+This project is a C implementation that replicates the functionality of the printf function. It allows users to write output to the standard output stream (stdout) using a character string as a format.
 
-Write a function that produces output according to a format.
+The printf function takes a format string as its first argument, followed by additional arguments of various types. This project supports all the standard format specifiers, such as %s, %d, and %x, and also includes flags and width modifiers.
 
-Prototype: int _printf(const char *format, ...);
-Returns: the number of characters printed (excluding the null byte used to end output to strings)
-write output to stdout, the standard output stream
-format is a character string. The format string is composed of zero or more directives. See man 3 printf for more detail. You need to handle the following conversion specifiers:
-c
-s
-%
-You don’t have to reproduce the buffer handling of the C library printf function
-You don’t have to handle the flag characters
-You don’t have to handle field width
-You don’t have to handle precision
-You don’t have to handle the length modifiers
+To achieve this, the printf function internally utilizes the write, malloc, free, va_start, va_end, va_copy, and va_arg functions and macros, as described in the man pages.
+
+This project serves as a valuable resource for anyone aiming to comprehend the behavior of the standard printf function in C, or for those interested in implementing their own version of printf.
