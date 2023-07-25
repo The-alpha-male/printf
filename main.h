@@ -7,7 +7,7 @@
 /**
  * struct prv - struct prv
  * @id: chat
- * @f: function pointer
+ * @f: func pointer
  */
 
 typedef struct prv
