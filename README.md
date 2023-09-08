@@ -7,11 +7,10 @@ This project is a C implementation that replicates the functionality of the prin
 The printf function takes a format string as its first argument, followed by additional arguments of various types. This project supports all the standard format specifiers.
 Example:
 
-```
-%s
-%d
-%x
-```
+``%s``
+``%d``
+``%x``
+ 
 It also includes flags and width modifiers.
 
 To achieve this, the printf function internally utilizes the write, malloc, free, va_start, va_end, va_copy, and va_arg functions and macros, as described in the man pages.
