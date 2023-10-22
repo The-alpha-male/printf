@@ -13,6 +13,6 @@ Example:
  
 It also includes flags and width modifiers.
 
-To achieve this, the printf function internally utilizes the write, malloc, free, va_start, va_end, va_copy, and va_arg functions and macros, as described in the man pages.
+To achieve this,the printf function internally utilizes the write, malloc, free, va_start, va_end, va_copy, and va_arg functions and macros, as described in the man pages.
 
 This project serves as a valuable resource for anyone aiming to comprehend the behavior of the standard printf function in C, or for those interested in implementing their own version of printf.
